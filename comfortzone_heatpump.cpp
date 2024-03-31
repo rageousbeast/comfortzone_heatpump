@@ -304,7 +304,7 @@ bool comfortzone_heatpump::set_hot_water_priority(uint8_t priority, int timeout)
 	czdec::KNOWN_REGISTER *kr;
 	bool push_result;
 
-	if(priority < 1 || priority > 3)
+	if((priority < 1) || (priority > 3))
 	{
 		RETURN_MESSAGE("Invalid value, must be between 1 and 3");
 		return false;
@@ -327,7 +327,7 @@ bool comfortzone_heatpump::set_hot_water_priority(uint8_t priority, int timeout)
 	{
 		// on success, immediatly update status cache. Without this, if status cache is sent to client
 		// before receiving update from heatpump, an incorrect value is returned
-		comfortzone_status.hot_water_priority_setting = priority;
+		//comfortzone_status.hot_water_priority_setting = priority;
 	}
 
 	return push_result;
