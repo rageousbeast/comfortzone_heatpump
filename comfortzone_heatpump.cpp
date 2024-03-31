@@ -296,6 +296,43 @@ bool comfortzone_heatpump::set_hot_water_temperature(float hot_water_temp, int t
 	return push_result;
 }
 
+// hot water priority: 1=low, 2=normal, 3=high
+bool comfortzone_heatpump::set_hot_water_priority(uint8_t priority, int timeout)
+{
+	W_SMALL_CMD cmd;
+	W_REPLY expected_reply;
+	czdec::KNOWN_REGISTER *kr;
+	bool push_result;
+
+	if(priority < 1 || priority > 3)
+	{
+		RETURN_MESSAGE("Invalid value, must be between 1 and 3");
+		return false;
+	}
+
+	kr = czdec::kr_craft_name_to_index(czcraft::KR_HOT_WATER_PRIORITY);
+
+	if(kr == NULL)
+	{
+		RETURN_MESSAGE("czcraft::KR_HOT_WATER_PRIORITY not found");
+		return false;
+	}
+
+	czcraft::craft_w_small_cmd(this, &cmd, kr->reg_num, priority);
+	czcraft::craft_w_reply(this, &expected_reply, kr->reg_num, priority);
+
+	push_result = push_settings((byte*)&cmd, sizeof(cmd), (byte*)&expected_reply, sizeof(expected_reply), timeout);
+
+	if(push_result == true)
+	{
+		// on success, immediatly update status cache. Without this, if status cache is sent to client
+		// before receiving update from heatpump, an incorrect value is returned
+		comfortzone_status.hot_water_priority_setting = priority;
+	}
+
+	return push_result;
+}
+
 // led level: 0 = off -> 6 = highest level
 bool comfortzone_heatpump::set_led_luminosity(uint8_t led_level, int timeout)
 {

@@ -64,6 +64,7 @@ class comfortzone_heatpump
 	bool set_fan_speed(uint8_t fan_speed, int timeout = 5);					// 1 = low, 2 = normal, 3 = fast
 	bool set_room_temperature(float room_temp, int timeout = 5);			// temperature in °C (10.0° -> 50.0°, step 0.1°)
 	bool set_hot_water_temperature(float room_temp, int timeout = 5);	// temperature in °C (10.0° -> 60.0°, step 0.1°)
+	bool set_hot_water_priority(uint8_t priority, int timeout = 5);			// 1=low, 2=normal, 3=high
 	bool set_led_luminosity(uint8_t led_level, int timeout = 5);			// 0 = off -> 6 = highest level
 
 	bool set_hour(uint8_t hour, int timeout = 5);			// 0-23

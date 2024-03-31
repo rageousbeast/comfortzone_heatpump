@@ -141,6 +141,10 @@ comfortzone_heatpump object.
  Temperature is in °C.
 
 
+ * bool set_hot_water_priority(uint8_t priority, int timeout = 5);
+
+ update heatpump hot water priority setting. 1=low, 2=normal, 3=high.
+
  * bool set_led_luminosity(uint8_t led_level, int timeout = 5);
 
  update heatpump led luminosity. Values goes from 0 (off) to 6 (highest level).
